@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.ru.mag.db.jdbc.app.controllers.BatchController"
+          alignment="center"
+          hgap="10"
+          vgap="10"
+          prefWidth="700"
+          prefHeight="500">
+
+    <columnConstraints>
+        <ColumnConstraints halignment="RIGHT"/>
+        <ColumnConstraints halignment="LEFT"/>
+    </columnConstraints>
+
+    <Label text="Batch ID:" GridPane.rowIndex="0"/>
+    <TextField fx:id="txtBatchId" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+    <Label text="Product ID:" GridPane.rowIndex="1"/>
+    <TextField fx:id="txtProductId" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Batch No:" GridPane.rowIndex="2"/>
+    <TextField fx:id="txtBatchNo" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <Label text="Expiry Date:" GridPane.rowIndex="3"/>
+    <DatePicker fx:id="dpExpiry" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <HBox spacing="10" GridPane.rowIndex="4" GridPane.columnSpan="2" alignment="CENTER">
+        <Button text="Create" onAction="#create"/>
+        <Button text="Update" onAction="#update"/>
+        <Button text="Delete" onAction="#delete"/>
+    </HBox>
+
+    <TableView fx:id="tblBatches"
+               GridPane.rowIndex="5"
+               GridPane.columnSpan="2"
+               prefHeight="250"
+               onMouseClicked="#onSelect">
+
+        <columns>
+            <TableColumn fx:id="colId" text="Batch ID" prefWidth="90"/>
+            <TableColumn fx:id="colProduct" text="Product ID" prefWidth="90"/>
+            <TableColumn fx:id="colBatchNo" text="Batch No" prefWidth="180"/>
+            <TableColumn fx:id="colExpiry" text="Expiry" prefWidth="120"/>
+        </columns>
+    </TableView>
+
+</GridPane>

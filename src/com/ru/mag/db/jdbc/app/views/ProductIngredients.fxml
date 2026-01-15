@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.ru.mag.db.jdbc.app.controllers.ProductIngredientsController"
+          alignment="center"
+          hgap="10"
+          vgap="10"
+          prefWidth="760"
+          prefHeight="440">
+
+    <columnConstraints>
+        <ColumnConstraints halignment="RIGHT"/>
+        <ColumnConstraints halignment="LEFT"/>
+    </columnConstraints>
+
+    <children>
+        <Label fx:id="lblProduct"
+               text="Product:"
+               GridPane.rowIndex="0"
+               GridPane.columnSpan="2"
+               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+        <Label text="Ingredient:" GridPane.rowIndex="1"/>
+        <ComboBox fx:id="cmbIngredient" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="260"/>
+
+        <Label text="Amount:" GridPane.rowIndex="2"/>
+        <TextField fx:id="txtAmount" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="260"/>
+
+        <Label text="Unit:" GridPane.rowIndex="3"/>
+        <TextField fx:id="txtUnit" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="260"/>
+
+        <HBox spacing="10" GridPane.rowIndex="4" GridPane.columnSpan="2" alignment="CENTER">
+            <Button text="Add" onAction="#addIngredient"/>
+            <Button text="Update selected" onAction="#updateIngredient"/>
+            <Button text="Delete selected" onAction="#deleteIngredient"/>
+        </HBox>
+
+        <TableView fx:id="tblIngredients"
+                   GridPane.rowIndex="5"
+                   GridPane.columnSpan="2"
+                   prefHeight="260"
+                   onMouseClicked="#onSelect">
+
+            <columns>
+                <TableColumn fx:id="colIngredientId" text="Ingredient ID" prefWidth="110"/>
+                <TableColumn fx:id="colIngredientName" text="Name" prefWidth="260"/>
+                <TableColumn fx:id="colAmount" text="Amount" prefWidth="140"/>
+                <TableColumn fx:id="colUnit" text="Unit" prefWidth="120"/>
+            </columns>
+        </TableView>
+
+    </children>
+</GridPane>

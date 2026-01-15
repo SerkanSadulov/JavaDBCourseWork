@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17.0.12"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.ru.mag.db.jdbc.app.controllers.MainController"
+          alignment="TOP_CENTER"
+          hgap="10"
+          vgap="12"
+          prefHeight="600"
+          prefWidth="420">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER"/>
+    </columnConstraints>
+
+    <children>
+
+        <Label text="Pharmacy Management"
+               GridPane.rowIndex="0"
+               style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+        <Label text="Master data"
+               GridPane.rowIndex="1"
+               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+        <Button text="Products"
+                prefWidth="260"
+                onAction="#openProductCrud"
+                GridPane.rowIndex="2"/>
+
+        <Button text="Manufacturers"
+                prefWidth="260"
+                onAction="#openManufacturerCrud"
+                GridPane.rowIndex="3"/>
+
+        <Button text="Ingredients"
+                prefWidth="260"
+                onAction="#openIngredientCrud"
+                GridPane.rowIndex="4"/>
+
+        <Button text="Suppliers"
+                prefWidth="260"
+                onAction="#openSupplierCrud"
+                GridPane.rowIndex="5"/>
+
+        <Button text="Customers"
+                prefWidth="260"
+                onAction="#openCustomerCrud"
+                GridPane.rowIndex="6"/>
+
+        <Separator GridPane.rowIndex="7"/>
+
+        <Label text="Stock"
+               GridPane.rowIndex="8"
+               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+        <Button text="Batches"
+                prefWidth="260"
+                onAction="#openBatchCrud"
+                GridPane.rowIndex="9"/>
+
+        <Button text="Inventory"
+                prefWidth="260"
+                onAction="#openInventoryCrud"
+                GridPane.rowIndex="10"/>
+
+        <Button text="Stock receipts"
+                prefWidth="260"
+                onAction="#openStockReceiptCrud"
+                GridPane.rowIndex="11"/>
+
+        <Separator GridPane.rowIndex="12"/>
+
+        <Label text="Logistics"
+               GridPane.rowIndex="13"
+               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+        <Button text="Deliveries"
+                prefWidth="260"
+                onAction="#openDeliveryCrud"
+                GridPane.rowIndex="14"/>
+
+        <Button text="Delivery products"
+                prefWidth="260"
+                onAction="#openDeliveryProductCrud"
+                GridPane.rowIndex="15"/>
+
+    </children>
+</GridPane>

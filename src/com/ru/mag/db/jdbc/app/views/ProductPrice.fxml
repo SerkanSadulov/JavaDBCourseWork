@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.ru.mag.db.jdbc.app.controllers.ProductPriceController"
+          alignment="center"
+          hgap="10"
+          vgap="10"
+          prefWidth="720"
+          prefHeight="420">
+
+    <columnConstraints>
+        <ColumnConstraints halignment="RIGHT"/>
+        <ColumnConstraints halignment="LEFT"/>
+    </columnConstraints>
+
+    <children>
+        <Label fx:id="lblProduct"
+               text="Product:"
+               GridPane.rowIndex="0"
+               GridPane.columnSpan="2"
+               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+        <Label text="Price ID:" GridPane.rowIndex="1"/>
+        <TextField fx:id="txtPriceId" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Valid from:" GridPane.rowIndex="2"/>
+        <DatePicker fx:id="dpFrom" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Valid to:" GridPane.rowIndex="3"/>
+        <DatePicker fx:id="dpTo" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Price:" GridPane.rowIndex="4"/>
+        <TextField fx:id="txtPrice" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <HBox spacing="10" GridPane.rowIndex="5" GridPane.columnSpan="2" alignment="CENTER">
+            <Button text="Add price" onAction="#addPrice"/>
+            <Button text="Delete selected" onAction="#deletePrice"/>
+        </HBox>
+
+        <TableView fx:id="tblPrices"
+                   GridPane.rowIndex="6"
+                   GridPane.columnSpan="2"
+                   prefHeight="240">
+
+            <columns>
+                <TableColumn fx:id="colPriceId" text="Price ID" prefWidth="90"/>
+                <TableColumn fx:id="colFrom" text="Valid From" prefWidth="160"/>
+                <TableColumn fx:id="colTo" text="Valid To" prefWidth="160"/>
+                <TableColumn fx:id="colPrice" text="Price" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </children>
+</GridPane>

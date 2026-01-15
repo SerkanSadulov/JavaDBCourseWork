@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ru.mag.db.jdbc.app.controllers.TableController">
+    <header>
+      <AnchorPane minHeight="50.0" minWidth="0.0" prefHeight="80.0" prefWidth="320.0">
+         <children>
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="480.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="480.0" text="Students list:" textAlignment="JUSTIFY" fx:id="testLabel">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children></AnchorPane>
+    </header>
+    <content>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="480.0">
+         <children>
+            <TableView layoutY="1.0" prefHeight="220.0" prefWidth="480.0" fx:id="tableView1">
+              <columns>
+              </columns>
+            </TableView>
+         </children></AnchorPane>
+    </content>
+</DialogPane>

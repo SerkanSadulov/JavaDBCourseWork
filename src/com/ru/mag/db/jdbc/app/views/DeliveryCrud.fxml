@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.ru.mag.db.jdbc.app.controllers.DeliveryController"
+          alignment="center"
+          hgap="10"
+          vgap="10"
+          prefWidth="760"
+          prefHeight="560">
+
+    <columnConstraints>
+        <ColumnConstraints halignment="RIGHT"/>
+        <ColumnConstraints halignment="LEFT"/>
+    </columnConstraints>
+
+    <Label text="Delivery ID:"/>
+    <TextField fx:id="txtDeliveryId" GridPane.columnIndex="1"/>
+
+    <Label text="Customer ID:" GridPane.rowIndex="1"/>
+    <TextField fx:id="txtCustomerId" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Document No:" GridPane.rowIndex="2"/>
+    <TextField fx:id="txtDocNo" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <Label text="Delivered At:" GridPane.rowIndex="3"/>
+    <DatePicker fx:id="dpDelivered" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <Label text="Vehicle Plate:" GridPane.rowIndex="4"/>
+    <TextField fx:id="txtPlate" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+    <Label text="Carrier:" GridPane.rowIndex="5"/>
+    <TextField fx:id="txtCarrier" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+    <Label text="Note:" GridPane.rowIndex="6"/>
+    <TextField fx:id="txtNote" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+    <HBox spacing="10" GridPane.rowIndex="7" GridPane.columnSpan="2" alignment="CENTER">
+        <Button text="Create" onAction="#create"/>
+        <Button text="Update" onAction="#update"/>
+        <Button text="Delete" onAction="#delete"/>
+    </HBox>
+
+    <TableView fx:id="tblDeliveries"
+               GridPane.rowIndex="8"
+               GridPane.columnSpan="2"
+               prefHeight="260"
+               onMouseClicked="#onSelect">
+
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+            <TableColumn fx:id="colCustomer" text="Customer" prefWidth="100"/>
+            <TableColumn fx:id="colDoc" text="Doc No" prefWidth="180"/>
+            <TableColumn fx:id="colDate" text="Delivered" prefWidth="120"/>
+        </columns>
+    </TableView>
+</GridPane>

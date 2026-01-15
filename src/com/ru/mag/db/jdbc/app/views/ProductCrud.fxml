@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.ru.mag.db.jdbc.app.controllers.ProductController"
+          alignment="center"
+          hgap="10"
+          vgap="10"
+          prefWidth="750"
+          prefHeight="520">
+
+    <columnConstraints>
+        <ColumnConstraints halignment="RIGHT"/>
+        <ColumnConstraints halignment="LEFT"/>
+    </columnConstraints>
+
+    <Label text="Product ID:" GridPane.rowIndex="0"/>
+    <TextField fx:id="txtProductId" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+    <Label text="Manufacturer:" GridPane.rowIndex="1"/>
+    <ComboBox fx:id="cmbManufacturer" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Name:" GridPane.rowIndex="2"/>
+    <TextField fx:id="txtName" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <Label text="Form:" GridPane.rowIndex="3"/>
+    <TextField fx:id="txtForm" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <Label text="GTIN:" GridPane.rowIndex="4"/>
+    <TextField fx:id="txtGtin" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+    <Label text="Type:" GridPane.rowIndex="5"/>
+    <ComboBox fx:id="cmbType" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+    <CheckBox fx:id="chkRx"
+              text="Prescription only"
+              GridPane.rowIndex="6"
+              GridPane.columnIndex="1"
+              visible="false"/>
+
+    <TextField fx:id="txtRiskClass"
+               promptText="Risk class"
+               GridPane.rowIndex="6"
+               GridPane.columnIndex="1"
+               visible="false"/>
+
+    <HBox spacing="10"
+          GridPane.rowIndex="7"
+          GridPane.columnSpan="2"
+          alignment="CENTER">
+
+        <Button text="Create" onAction="#create"/>
+        <Button text="Update" onAction="#update"/>
+        <Button text="Delete" onAction="#delete"/>
+        <Button text="Prices of product" onAction="#openPrices"/>
+        <Button text="Ingredients" onAction="#openIngredients"/>
+    </HBox>
+
+    <TableView fx:id="tblProducts"
+               GridPane.rowIndex="8"
+               GridPane.columnSpan="2"
+               prefHeight="240"
+               onMouseClicked="#onSelect">
+
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+            <TableColumn fx:id="colName" text="Name" prefWidth="220"/>
+            <TableColumn fx:id="colForm" text="Form" prefWidth="120"/>
+            <TableColumn fx:id="colType" text="Type" prefWidth="120"/>
+            <TableColumn fx:id="colCurrentPrice" text="Current Price" prefWidth="120"/>
+        </columns>
+    </TableView>
+
+</GridPane>
