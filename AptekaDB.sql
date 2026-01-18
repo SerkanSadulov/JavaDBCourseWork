@@ -4,7 +4,7 @@ CREATE OR REPLACE TYPE address_t AS OBJECT (
     street_address VARCHAR2(200),
     postal_code    VARCHAR2(20)
 );
-/
+
 
 CREATE TABLE Company (
     company_id NUMBER PRIMARY KEY,
@@ -112,3 +112,4 @@ CREATE TABLE Delivery_Product (
     qty                 NUMBER,
     unit_price          NUMBER(10,2)
 );
+
