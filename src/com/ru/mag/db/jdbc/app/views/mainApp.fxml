@@ -10,7 +10,7 @@
           alignment="TOP_CENTER"
           hgap="10"
           vgap="12"
-          prefHeight="600"
+          prefHeight="650"
           prefWidth="420">
 
     <padding>
@@ -36,25 +36,30 @@
                 onAction="#openProductCrud"
                 GridPane.rowIndex="2"/>
 
+        <Button text="Delivery Report"
+                prefWidth="260"
+                onAction="#openDeliveryReport"
+                GridPane.rowIndex="3"/>
+
         <Button text="Manufacturers"
                 prefWidth="260"
                 onAction="#openManufacturerCrud"
-                GridPane.rowIndex="3"/>
+                GridPane.rowIndex="4"/>
 
         <Button text="Ingredients"
                 prefWidth="260"
                 onAction="#openIngredientCrud"
-                GridPane.rowIndex="4"/>
+                GridPane.rowIndex="5"/>
 
         <Button text="Suppliers"
                 prefWidth="260"
                 onAction="#openSupplierCrud"
-                GridPane.rowIndex="5"/>
+                GridPane.rowIndex="6"/>
 
         <Button text="Customers"
                 prefWidth="260"
                 onAction="#openCustomerCrud"
-                GridPane.rowIndex="6"/>
+                GridPane.rowIndex="7"/>
 
         <Separator GridPane.rowIndex="7"/>
 
@@ -92,6 +97,8 @@
                 prefWidth="260"
                 onAction="#openDeliveryProductCrud"
                 GridPane.rowIndex="15"/>
+
+
 
     </children>
 </GridPane>

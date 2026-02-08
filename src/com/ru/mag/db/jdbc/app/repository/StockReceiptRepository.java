@@ -7,63 +7,70 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StockReceiptRepository {
+public class StockReceiptRepository implements AutoCloseable {
+
+    private final Connection connection;
+
+    private static final String INSERT_SQL = "INSERT INTO Stock_Receipt(receipt_id, supplier_id, doc_no, received_at, note) VALUES (?,?,?,?,?)";
+    private static final String UPDATE_SQL = "UPDATE Stock_Receipt SET supplier_id=?, doc_no=?, received_at=?, note=? WHERE receipt_id=?";
+    private static final String DELETE_SQL = "DELETE FROM Stock_Receipt WHERE receipt_id=?";
+    private static final String FIND_ALL_SQL = "SELECT receipt_id, supplier_id, doc_no, received_at, note FROM Stock_Receipt ORDER BY receipt_id";
+
+    private final PreparedStatement insertStmt;
+    private final PreparedStatement updateStmt;
+    private final PreparedStatement deleteStmt;
+    private final PreparedStatement findAllStmt;
+
+    public StockReceiptRepository() {
+        try {
+            this.connection = DBConnection.getConnection();
+            this.insertStmt = connection.prepareStatement(INSERT_SQL);
+            this.updateStmt = connection.prepareStatement(UPDATE_SQL);
+            this.deleteStmt = connection.prepareStatement(DELETE_SQL);
+            this.findAllStmt = connection.prepareStatement(FIND_ALL_SQL);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void create(StockReceipt r) {
-        String sql =
-                "INSERT INTO Stock_Receipt(receipt_id, supplier_id, doc_no, received_at, note) " +
-                        "VALUES (?,?,?,?,?)";
-
-        try (PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql)) {
-            ps.setInt(1, r.getReceiptId());
-            ps.setInt(2, r.getSupplierId());
-            ps.setString(3, r.getDocNo());
-            ps.setDate(4, Date.valueOf(r.getReceivedAt()));
-            ps.setString(5, r.getNote());
-            ps.executeUpdate();
-        } catch (Exception e) {
+        try {
+            insertStmt.setInt(1, r.getReceiptId());
+            insertStmt.setInt(2, r.getSupplierId());
+            insertStmt.setString(3, r.getDocNo());
+            insertStmt.setDate(4, Date.valueOf(r.getReceivedAt()));
+            insertStmt.setString(5, r.getNote());
+            insertStmt.executeUpdate();
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void update(StockReceipt r) {
-        String sql =
-                "UPDATE Stock_Receipt SET supplier_id=?, doc_no=?, received_at=?, note=? " +
-                        "WHERE receipt_id=?";
-
-        try (PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql)) {
-            ps.setInt(1, r.getSupplierId());
-            ps.setString(2, r.getDocNo());
-            ps.setDate(3, Date.valueOf(r.getReceivedAt()));
-            ps.setString(4, r.getNote());
-            ps.setInt(5, r.getReceiptId());
-            ps.executeUpdate();
-        } catch (Exception e) {
+        try {
+            updateStmt.setInt(1, r.getSupplierId());
+            updateStmt.setString(2, r.getDocNo());
+            updateStmt.setDate(3, Date.valueOf(r.getReceivedAt()));
+            updateStmt.setString(4, r.getNote());
+            updateStmt.setInt(5, r.getReceiptId());
+            updateStmt.executeUpdate();
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void delete(int receiptId) {
-        try (PreparedStatement ps =
-                     DBConnection.getConnection().prepareStatement(
-                             "DELETE FROM Stock_Receipt WHERE receipt_id=?")) {
-            ps.setInt(1, receiptId);
-            ps.executeUpdate();
-        } catch (Exception e) {
+        try {
+            deleteStmt.setInt(1, receiptId);
+            deleteStmt.executeUpdate();
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public List<StockReceipt> findAll() {
         List<StockReceipt> list = new ArrayList<>();
-
-        String sql =
-                "SELECT receipt_id, supplier_id, doc_no, received_at, note " +
-                        "FROM Stock_Receipt ORDER BY receipt_id";
-
-        try (PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
+        try (ResultSet rs = findAllStmt.executeQuery()) {
             while (rs.next()) {
                 StockReceipt r = new StockReceipt();
                 r.setReceiptId(rs.getInt("receipt_id"));
@@ -73,10 +80,18 @@ public class StockReceiptRepository {
                 r.setNote(rs.getString("note"));
                 list.add(r);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return list;
+    }
+
+    @Override
+    public void close() throws Exception {
+        if (insertStmt != null) insertStmt.close();
+        if (updateStmt != null) updateStmt.close();
+        if (deleteStmt != null) deleteStmt.close();
+        if (findAllStmt != null) findAllStmt.close();
+        if (connection != null) connection.close();
     }
 }

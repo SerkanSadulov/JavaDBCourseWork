@@ -56,6 +56,9 @@ public class MainController {
     public void openDeliveryProductCrud(ActionEvent e) throws IOException {
         openCrudWindow("DeliveryProductCrud.fxml", "Delivery Products");
     }
+    public void openDeliveryReport(ActionEvent e) throws IOException {
+        openCrudWindow("DeliveryReport.fxml", "Delivery Report");
+    }
 
     private void openCrudWindow(String fxml, String title) throws IOException {
 

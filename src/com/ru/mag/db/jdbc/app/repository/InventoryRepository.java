@@ -7,10 +7,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InventoryRepository {
+public class InventoryRepository implements AutoCloseable {
 
-    public void upsert(Inventory i) {
-        String sql = """
+    private final Connection connection;
+
+    private static final String UPSERT_SQL = """
             MERGE INTO Inventory inv
             USING dual
             ON (inv.batch_id = ?)
@@ -20,25 +21,42 @@ public class InventoryRepository {
                 INSERT (batch_id, qty, min_qty) VALUES (?, ?, ?)
             """;
 
-        try (PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql)) {
-            ps.setInt(1, i.getBatchId());
-            ps.setDouble(2, i.getQty());
-            ps.setDouble(3, i.getMinQty());
-            ps.setInt(4, i.getBatchId());
-            ps.setDouble(5, i.getQty());
-            ps.setDouble(6, i.getMinQty());
-            ps.executeUpdate();
+    private static final String DELETE_SQL = "DELETE FROM Inventory WHERE batch_id=?";
+    private static final String FIND_ALL_SQL = "SELECT batch_id, qty, min_qty FROM Inventory ORDER BY batch_id";
+
+    private final PreparedStatement upsertStmt;
+    private final PreparedStatement deleteStmt;
+    private final PreparedStatement findAllStmt;
+
+    public InventoryRepository() {
+        try {
+            this.connection = DBConnection.getConnection();
+            this.upsertStmt = connection.prepareStatement(UPSERT_SQL);
+            this.deleteStmt = connection.prepareStatement(DELETE_SQL);
+            this.findAllStmt = connection.prepareStatement(FIND_ALL_SQL);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void upsert(Inventory i) {
+        try {
+            upsertStmt.setInt(1, i.getBatchId());
+            upsertStmt.setDouble(2, i.getQty());
+            upsertStmt.setDouble(3, i.getMinQty());
+            upsertStmt.setInt(4, i.getBatchId());
+            upsertStmt.setDouble(5, i.getQty());
+            upsertStmt.setDouble(6, i.getMinQty());
+            upsertStmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void delete(int batchId) {
-        try (PreparedStatement ps =
-                     DBConnection.getConnection().prepareStatement(
-                             "DELETE FROM Inventory WHERE batch_id=?")) {
-            ps.setInt(1, batchId);
-            ps.executeUpdate();
+        try {
+            deleteStmt.setInt(1, batchId);
+            deleteStmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -46,12 +64,7 @@ public class InventoryRepository {
 
     public List<Inventory> findAll() {
         List<Inventory> list = new ArrayList<>();
-
-        String sql = "SELECT batch_id, qty, min_qty FROM Inventory ORDER BY batch_id";
-
-        try (PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
+        try (ResultSet rs = findAllStmt.executeQuery()) {
             while (rs.next()) {
                 Inventory i = new Inventory();
                 i.setBatchId(rs.getInt("batch_id"));
@@ -62,7 +75,14 @@ public class InventoryRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return list;
+    }
+
+    @Override
+    public void close() throws Exception {
+        if (upsertStmt != null) upsertStmt.close();
+        if (deleteStmt != null) deleteStmt.close();
+        if (findAllStmt != null) findAllStmt.close();
+        if (connection != null) connection.close();
     }
 }

@@ -16,7 +16,7 @@ public class DBConnection {
                 DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
                 connection = DriverManager.getConnection(
                         "jdbc:oracle:thin:@localhost:1521:xe",
-                        "AptekaKursova",
+                        "AptekaKursov",
                         "123456"
                 );
             }
